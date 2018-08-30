@@ -1,6 +1,6 @@
 var fs = require('fs')
 var path = require('path')
-var { clearComment } = require('./util')
+var { clearComment } = require('../util')
 var { creater } = require('./plugin')
 var { relativePath } = require('./base')
 var rootPath = path.resolve(process.cwd(), relativePath('../src/mock'))

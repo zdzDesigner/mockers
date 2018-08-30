@@ -4,7 +4,7 @@
  * @return {[type]}             [description]
  */
 const util = require('util')
-const curry = require('lodash.curry')
+const curry = require('lodash/curry')
 const Mock = require('mockjs')
 const { warn } = require('../../util')
 const Letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
