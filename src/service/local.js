@@ -1,47 +1,50 @@
 var fs = require('fs')
 var path = require('path')
-var { clearComment } = require('../util')
+var { clearComments } = require('../util')
 var { creater } = require('./plugin')
 var { relativePath } = require('./base')
-var rootPath = path.resolve(process.cwd(), relativePath('../src/mock'))
 
 
-module.exports = function localMock(req, res, next){
-    var mockRemote = req.headers['mock-remote']
-    // var rootPath = ''
-    var filePath = ''
-    if(mockRemote){
+module.exports = function(mockPath){
 
-        // var rootPath = path.resolve(process.cwd(), relativePath('../src/mock'))
-        mockRemote = mockRemote.replace('/@mock','').replace('@mock','')
-        filePath = rootPath + mockRemote
-        console.log('mock-local: ', filePath)
+
+    var rootPath = path.resolve(process.cwd(), relativePath(mockPath))
+
+    return function localMock(req, res, next){
+        var mockRemote = req.headers['mock-remote']
         
-        if(fs.existsSync(filePath)){
-            var data = fs.readFileSync(filePath)
-            var dataObj = clearComment(data.toString())
-            data = JSON.parse(dataObj.code)
+        var filePath = ''
+        if(mockRemote){
+            mockRemote = mockRemote.replace('/@mock','').replace('@mock','')
+            filePath = rootPath + mockRemote
+            console.log('mock-local: ', filePath)
             
-            creater(data,filePath,'',validMock(dataObj.comments))
-                .then(function(data){
-                    res.writeHead(200,{
-                        'content-type':'application/json;charset=utf8'
+            if(fs.existsSync(filePath)){
+                var data = fs.readFileSync(filePath)
+                var dataObj = clearComments(data.toString())
+                data = JSON.parse(dataObj.code)
+                
+                creater(data,filePath,'',validMock(dataObj.comments))
+                    .then(function(data){
+                        res.writeHead(200,{
+                            'content-type':'application/json;charset=utf8'
+                        })
+                        res.end(JSON.stringify(data))   
+                    }).catch(function(error){
+                        console.log(error)
                     })
-                    res.end(JSON.stringify(data))   
-                }).catch(function(error){
-                    console.log(error)
-                })
 
+            }else{
+                res.writeHead(404)
+                res.end('error file path:'+filePath)
+                console.log('error file path ',filePath)
+            }
+            
         }else{
-            res.writeHead(404)
-            res.end('error file path:'+filePath)
-            console.log('error file path ',filePath)
+            next()
         }
         
-    }else{
-        next()
     }
-    
 }
 function validMock(comments) {
     var commentRE = /\/+/g
