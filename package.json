@@ -1,0 +1,29 @@
+{
+  "name": "mockers",
+  "version": "0.1.0",
+  "description": "mock data ,config mock creater",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zdzDesigner/mockers.git"
+  },
+  "keywords": [
+    "mock",
+    "config",
+    "creater"
+  ],
+  "author": "zdzDesigner",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zdzDesigner/mockers/issues"
+  },
+  "homepage": "https://github.com/zdzDesigner/mockers#readme",
+  "dependencies": {
+    "http-proxy": "^1.17.0",
+    "lodash": "^4.17.10",
+    "mockjs": "^1.0.1-beta3"
+  }
+}
