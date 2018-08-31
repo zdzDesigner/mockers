@@ -2,7 +2,7 @@
  * [remote 线上mock数据]
  */
 const url = require('url')
-const proxyServer = require('./plugin')
+const {proxyServer} = require('./plugin')
 
 module.exports = function remoteMock(req, res, next){
     
@@ -23,11 +23,11 @@ module.exports = function remoteMock(req, res, next){
         delete req.headers.host
         delete req.headers.domain
         delete req.headers['mock-remote'] 
-        
-        // console.log({proxyServer})
-        proxyServer.web(req, res,{
-            target:`${mockParsed.protocol}//${mockParsed.hostname}`
-        })  
+        let {protocol, hostname, port} = mockParsed
+        // console.log({mockParsed})
+        let target = `${protocol}//${hostname}`
+        port && (target = `${target}:${port}`)
+        proxyServer.web(req, res,{ target })  
     }else{
         next()    
     }
