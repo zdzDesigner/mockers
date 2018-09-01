@@ -17,14 +17,15 @@ module.exports = function remoteMock(req, res, next){
     // console.log('mockParsed.protocol: ', mockParsed.protocol)
     if(~['http:','https:'].indexOf(mockParsed.protocol)){
         console.log('mock-remote: ',mockRemote)
-        req.url = mockParsed.pathname
-        req.method = 'GET'
+        // console.log({mockParsed})
+        req.url = mockParsed.path
         
         delete req.headers.host
         delete req.headers.domain
-        delete req.headers['mock-remote'] 
+        delete req.headers['mock-remote']
+
         let {protocol, hostname, port} = mockParsed
-        // console.log({mockParsed})
+        
         let target = `${protocol}//${hostname}`
         port && (target = `${target}:${port}`)
         proxyServer.web(req, res,{ target })  

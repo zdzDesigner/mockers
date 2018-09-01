@@ -1,6 +1,6 @@
 {
   "name": "mockers",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "mock data ,config mock creater",
   "main": "src/index.js",
   "scripts": {
