@@ -1,57 +1,43 @@
-var fs = require('fs')
-var path = require('path')
-var { clearComments } = require('../util')
-var { creater } = require('./plugin')
-var { relativePath } = require('./base')
+const fs = require('fs')
+const path = require('path')
+const { clearComments } = require('../util')
+const { creater } = require('./plugin')
+const { relativePath } = require('./base')
 
 
 module.exports = function(mockPath){
-
-
-    var rootPath = path.resolve(process.cwd(), relativePath(mockPath))
-
-    return function localMock(req, res, next){
-        var mockRemote = req.headers['mock-remote']
-        
-        var filePath = ''
-        if(mockRemote){
+    let rootPath = path.resolve(process.cwd(), relativePath(mockPath))
+    return function (mockRemote){
+        return new Promise(function(resolve, reject){
             mockRemote = mockRemote.replace('/@mock','').replace('@mock','')
-            filePath = rootPath + mockRemote
+            let filePath = rootPath + mockRemote
             console.log('mock-local: ', filePath)
             
             if(fs.existsSync(filePath)){
-                var data = fs.readFileSync(filePath)
-                var dataObj = clearComments(data.toString())
+                let data = fs.readFileSync(filePath)
+                let dataObj = clearComments(data.toString())
                 data = JSON.parse(dataObj.code)
                 
-                creater(data,filePath,'',validMock(dataObj.comments))
+                creater(data, filePath, '', validMock(dataObj.comments))
                     .then(function(data){
-                        res.writeHead(200,{
-                            'content-type':'application/json;charset=utf8'
-                        })
-                        res.end(JSON.stringify(data))   
+                        resolve(data)
                     }).catch(function(error){
                         console.log(error)
+                        reject(error)
                     })
-
             }else{
-                res.writeHead(404)
-                res.end('error file path:'+filePath)
-                console.log('error file path ',filePath)
+                reject(`error file path: ${filePath}`)
             }
-            
-        }else{
-            next()
-        }
-        
+                
+        })
     }
 }
 function validMock(comments) {
-    var commentRE = /\/+/g
-    var spaceRE = /\s/g
+    const commentRE = /\/+/g
+    const spaceRE = /\s/g
     return comments.reduce(function(pend, val){
         val = val.replace(commentRE,'').replace(spaceRE,'')    
-        var {key,value} = parseColone(val)
+        let {key,value} = parseColone(val)
         if(~['mock-length' ,'mock-delay' ,'no-mock'].indexOf(key)){
             pend[key] = value
         }
@@ -61,7 +47,7 @@ function validMock(comments) {
 }
 
 function parseColone(val){
-    var arr = val.split(':')
+    let arr = val.split(':')
     return {
         key:arr[0],
         value:arr[1]
