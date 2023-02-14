@@ -1,0 +1,20 @@
+{
+  "mock-length": "[2,3]",
+  "message": "{{['请求成功']}}",
+  "result": {
+    "act_desc": "{\"expire\":\"有效期:{{yyyy-mm-dd}} 领取后,{{$range|[3,22]}}天有效\",\"store\":{\"pre_show\":\"适用全部门店\",\"choose_store\":[\"{{cname}}\",\"{{cname}}\"]},\"desc\":\"222\"}",
+    "act_title": "{{cname}}活动",
+    "act_start": "{{yyyy-mm-dd HH:mm:ss}}",
+    "act_end": "{{yyyy-mm-dd HH:mm:ss}}",
+    "act_limit": "{{['到店消费即可用']}}",
+    "use_amount": "{{[22.0]}}",
+    "max_amount": "{{$range|[22,100]}}",
+    "act_status": "{{[1,-1,0]}}",
+    "rush_times": [{ "start": "{{A hh:mm:ss}}", "end": "{{HH:mm:ss}}" }],
+    "act_value": "{{[222.00]}}",
+    "act_type": "{{[14,12,13,21,22]}}",
+    "act_expire_desc": "活动已结束",
+    "act_stores": "全部门店"
+  },
+  "code": "{{[10000]}}"
+}

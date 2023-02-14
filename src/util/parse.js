@@ -1,4 +1,4 @@
-export const clearComments = (code) => {
+export const parseTpl = (code) => {
   const commentRE = /(\/\/.*)?|(\/\*[\s\S]*?\*\/)/g
   let comments = []
 
@@ -10,7 +10,7 @@ export const clearComments = (code) => {
   }
 
   code = code.replace(commentRE, function (val) {
-    val && comments.push(val)
+    if (val) comments.push(val)
     return ''
   })
 
@@ -25,4 +25,9 @@ export const clearComments = (code) => {
     code,
     comments
   }
+}
+
+export const parsePair = (val) => {
+  let arr = val.split(':')
+  return { key: arr[0], value: arr[1] }
 }

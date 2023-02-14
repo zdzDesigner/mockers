@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { clearComments } from '../util'
+import { parseTpl, parsePair } from '../util'
 import { creater } from './plugin'
 
 export const createLocalMock = (rootPath) => {
@@ -13,11 +13,7 @@ export const createLocalMock = (rootPath) => {
       console.log('mock-local: ', filePath)
 
       if (fs.existsSync(filePath)) {
-        var data = fs.readFileSync(filePath)
-        var dataObj = clearComments(data.toString())
-        data = JSON.parse(dataObj.code)
-
-        creater(data, filePath, '', validMock(dataObj.comments))
+        tplToMock(filePath)
           .then(function (data) {
             res.writeHead(200, {
               'content-type': 'application/json;charset=utf8'
@@ -37,12 +33,21 @@ export const createLocalMock = (rootPath) => {
     }
   }
 }
+
+export const tplToMock = (filePath) => {
+  let data = fs.readFileSync(filePath)
+  let codeAndComments = parseTpl(data.toString())
+  data = JSON.parse(codeAndComments.code)
+
+  return creater(data, filePath, '', validMock(codeAndComments.comments))
+}
+
 const validMock = (comments) => {
   const commentRE = /\/+/g
   const spaceRE = /\s/g
   return comments.reduce(function (pend, val) {
     val = val.replace(commentRE, '').replace(spaceRE, '')
-    let { key, value } = parseColone(val)
+    let { key, value } = parsePair(val)
     if (~['mock-length', 'mock-delay', 'no-mock'].indexOf(key)) {
       pend[key] = value
     }
@@ -50,7 +55,3 @@ const validMock = (comments) => {
   }, {})
 }
 
-const parseColone = (val) => {
-  let arr = val.split(':')
-  return { key: arr[0], value: arr[1] }
-}

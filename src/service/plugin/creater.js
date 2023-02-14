@@ -126,6 +126,8 @@ var getStringValue = function (msg, index, mockPath, query) {
 
 const getStringType = function (value, index, mockPath) {
   var reg = /\{\{(.+?)\}\}/,
+    arr,
+    temp,
     data
 
   value = value.match(reg)[1].trim()
