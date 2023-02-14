@@ -1,8 +1,4 @@
-const warn = require('./warn.js')
-const clearComments = require('./clear-comments.js')
+export { isString, isNumber, isArray, isObject } from 'lodash-es'
 
-
-module.exports = {
-    warn,
-    clearComments
-}
+export { warn } from './warn.js'
+export { clearComments } from './clear-comments.js'
