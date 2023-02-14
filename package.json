@@ -1,11 +1,23 @@
 {
   "name": "mockers",
-  "version": "0.1.5",
+  "version": "1.0.0-alpha",
   "description": "mock data ,config mock creater",
-  "main": "src/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "main": "dist/mockers.js",
+  "module": "dist/mockers.esm.js",
+  "exports": {
+    "import": "./dist/mockers.esm.js",
+    "default": "./dist/mockers.js"
   },
+  "scripts": {
+    "build": "rollup -c ./rollup.config.mjs",
+    "test": "echo \"nothing!!!\" && exit 1"
+  },
+  "files": [
+    "dist",
+    "!dist/**/*.map",
+    "src",
+    "README.md"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zdzDesigner/mockers.git"
@@ -23,7 +35,24 @@
   "homepage": "https://github.com/zdzDesigner/mockers#readme",
   "dependencies": {
     "http-proxy": "^1.17.0",
-    "lodash": "^4.17.10",
+    "lodash-es": "^4.17.21",
     "mockjs": "^1.0.1-beta3"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^24.0.1",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-terser": "^0.4.0",
+    "rollup": "^3.15.0"
+  },
+  "prettier": {
+    "printWidth": 160,
+    "arrowParens": "always",
+    "singleQuote": true,
+    "bracketSpacing": true,
+    "endOfLine": "lf",
+    "semi": false,
+    "tabWidth": 2,
+    "trailingComma": "none",
+    "bracket-same-line": true
   }
 }
