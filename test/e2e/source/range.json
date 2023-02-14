@@ -14,7 +14,12 @@
     "act_value": "{{[222.00]}}",
     "act_type": "{{[14,12,13,21,22]}}",
     "act_expire_desc": "活动已结束",
-    "act_stores": "全部门店"
+    "act_stores": "全部门店",
+    "act_stores2": {
+      "tree":{
+        "name":""
+      }
+    }
   },
   "code": "{{[10000]}}"
 }

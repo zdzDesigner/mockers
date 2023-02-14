@@ -21,9 +21,9 @@ const Letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'
  }
  * @return {[type]}       [description]
  */
-var index
-function mockData(value, arrRange, mockPath, query) {
-  var data
+// var index
+const mockData = (value, arrRange, mockPath, query) => {
+  var data,index
 
   switch (true) {
     case isString(value):
@@ -44,10 +44,11 @@ function mockData(value, arrRange, mockPath, query) {
     case isArray(value):
       data = []
 
-      var min = arrRange[0]
-      var max = arrRange[1]
-      var mockTarget = value[0]
-      var size = Mock.Random.integer(min, max)
+      const min = arrRange[0]
+      const max = arrRange[1]
+      let mockTarget = value[0]
+      let size = Mock.Random.integer(min, max)
+      // console.log({min,max,size})
 
       if ('string' == typeof value[0] && ~value[0].indexOf('$length')) {
         size = getStringType(value[0])
@@ -90,7 +91,7 @@ function mockData(value, arrRange, mockPath, query) {
  *                  $add    $add(加的内容)|cname
  * @return {[type]}       [String]
  */
-var getStringValue = function (msg, index, mockPath, query) {
+const getStringValue = (msg, index, mockPath, query) => {
   var reg = /\{\{(.+?)\}\}/g
   var reg_match_arr = msg.match(reg)
 
@@ -124,7 +125,7 @@ var getStringValue = function (msg, index, mockPath, query) {
  *                  url     URL地址
  */
 
-const getStringType = function (value, index, mockPath) {
+const getStringType = (value, index, mockPath) => {
   var reg = /\{\{(.+?)\}\}/,
     arr,
     temp,
@@ -197,7 +198,6 @@ const getStringType = function (value, index, mockPath) {
         if (value.toLowerCase().match(/\//g)) {
           data = data.replace(/-/g, '/')
         }
-
         break
 
       case value.indexOf('$image') != -1:
@@ -222,7 +222,7 @@ const getStringType = function (value, index, mockPath) {
   // }
 }
 
-function convert_val(val, type, type_arg) {
+const convert_val = (val, type, type_arg) => {
   try {
     val = JSON.parse(val)
   } catch (e) {
@@ -230,7 +230,6 @@ function convert_val(val, type, type_arg) {
   }
 
   // console.log('convert_val',val)
-
   switch (type) {
     case 'to_fixed':
       val = (Math.random() * (+val[1] - val[0]) + val[0]).toFixed(type_arg)
@@ -242,7 +241,7 @@ function convert_val(val, type, type_arg) {
   return val
 }
 
-function uniq(data) {
+const uniq = (data) => {
   return data.reduce((newarr, val) => {
     if (!~newarr.indexOf(val)) newarr.push(val)
     return newarr
@@ -254,11 +253,9 @@ function uniq(data) {
  *                        {code:1000} => 1000
  * @return {[type]}       [Number]
  */
-var getNumberValue = function (value, index) {
-  return Mock.Random.integer(1, 100)
-}
+const getNumberValue = (value, index) => Mock.Random.integer(1, 100)
 
-var hasQuery = function (query, template) {
+const hasQuery = (query, template) => {
   var reg = /\[@(.+?)\]/,
     key
   template = template + ''
