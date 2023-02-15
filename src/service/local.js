@@ -4,12 +4,13 @@ import { creater } from './plugin'
 
 export const createLocalMock = (rootPath) => {
   return function localMock(req, res, next) {
-    var mockRemote = req.headers['mock-remote']
+    let mockLocal = req.headers['mock-local']
+    rootPath = req.headers['mock-root'] || rootPath
 
-    var filePath = ''
-    if (mockRemote) {
-      mockRemote = mockRemote.replace(/\/?@mock/g, '')
-      filePath = rootPath + mockRemote
+    let filePath = ''
+    if (mockLocal) {
+      mockLocal = mockLocal.replace(/\/?@mock/g, '')
+      filePath = rootPath + mockLocal
       console.log('mock-local: ', filePath)
 
       if (fs.existsSync(filePath)) {
