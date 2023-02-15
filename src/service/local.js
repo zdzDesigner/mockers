@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { parseTpl, parsePair } from '../util'
+import { parseTpl, parsePair, warn } from '../util'
 import { creater } from './plugin'
 
 export const createLocalMock = (rootPath) => {
@@ -37,7 +37,8 @@ export const createLocalMock = (rootPath) => {
 export const tplToMock = (filePath) => {
   let data = fs.readFileSync(filePath)
   let codeAndComments = parseTpl(data.toString())
-  data = JSON.parse(codeAndComments.code)
+
+  data = warn(() => JSON.parse(codeAndComments.code))
 
   return creater(data, filePath, '', validMock(codeAndComments.comments))
 }
@@ -54,4 +55,3 @@ const validMock = (comments) => {
     return pend
   }, {})
 }
-

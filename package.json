@@ -34,10 +34,10 @@
   },
   "homepage": "https://github.com/zdzDesigner/mockers#readme",
   "dependencies": {
-    "chalk": "^5.2.0",
     "http-proxy": "^1.17.0",
     "lodash-es": "^4.17.21",
-    "mockjs": "^1.0.1-beta3"
+    "mockjs": "^1.0.1-beta3",
+    "picocolors": "^1.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^24.0.1",

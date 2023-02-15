@@ -1,18 +1,20 @@
+import pc from 'picocolors'
+
+
 export const warn = (cb, mock_path) => {
   var data
 
   try {
     data = cb()
   } catch (err) {
-    console.log({err})
-    // if (mock_path) {
-    //   console.log(('JSON 语法错误 ：' + mock_path).red.bold)
-    //   console.log('请用JSON解析工具查看 ：http://www.bejson.com'.yellow.underline)
-    // }
+    if (mock_path) {
+      console.log(pc.red(pc.bold('JSON 语法错误 ：' + mock_path)))
+      console.log(pc.yellow(pc.underline('请用JSON解析工具查看 ：http://www.bejson.com')))
+    }
 
-    // console.log('Mock 参数错误 ：'.red)
-    // console.log(e.stack.red)
-    // console.log('--------------'.gray)
+    console.log(pc.red('Mock 参数错误 ：'))
+    console.log(pc.red(err.stack))
+    console.log(pc.gray('--------------'))
   }
 
   return data
