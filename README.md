@@ -23,7 +23,7 @@ setRequestHeader('mock-local', 'user/info.json')
 ### 本地 api(根据 url 匹配)
 
 **mockroot(全局根路径)**
-_更 mock 路径为"/dev/mock", 请求接口为"/user/info"
+_根 mock 路径为"/dev/mock", 请求接口为"/user/info"
 那要在"/dev/mock"目录下新建"active"目录，新建"info.json"文件
 即最终目录为"/dev/mock/user/info.json"_
 
@@ -115,7 +115,7 @@ _其中 info.json 中的数据即是接口文档中约定的数据 dome 如下_
 _列：想输出 1 到 10 中的任意 5 个非重复数，返回数组_
 
 ```js
-;['{{$length|[5,5]}}', '{{$range|[1,10]}}']
+['{{$length|[5,5]}}', '{{$range|[1,10]}}']
 ```
 
 - $range
